@@ -1,9 +1,79 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the Journal Project.");
+        Console.WriteLine("Welcome to the Journal Program!");
+
+        Journal journal = new Journal();
+        string user_input;
+
+        do
+        {
+            Console.WriteLine("Please select one of the following choices:\n1. Write\n2. Display\n3. Save\n4. Load\n5. Quit the Program");
+            Console.Write("What would you like to do? ");
+            user_input = Console.ReadLine();
+
+            if (user_input == "1")
+            {
+                // display a random prompt with PromptGenerator
+                PromptGenerator generator = new PromptGenerator();
+                string prompt = generator.GetRandomPrompt();
+                Console.WriteLine($"{prompt}");
+
+                // prompt the user to write their response
+                Console.Write("> ");
+                string response = Console.ReadLine();
+
+                // store prompt and response as an Entry in Journal
+                Entry entry = new Entry();
+
+                DateTime theCurrentTime = DateTime.Now;
+                string dateText = theCurrentTime.ToShortDateString();
+                entry._date = dateText;
+
+                entry._promptText = prompt;
+                entry._entryText = response;
+
+                journal.AddEntry(entry);
+            }
+            else if (user_input == "2")
+            {
+                // display all entries from Journal
+                journal.DisplayAll();
+            }
+            else if (user_input == "3")
+            {
+                // prompt file name to save to
+                Console.Write("What is the filename?");
+                string filename = Console.ReadLine();
+
+                // save all Journal Entries to requested file
+                journal.SaveToFile(filename);
+            }
+            else if (user_input == "4")
+            {
+                // prompt file name to load from
+                Console.Write("What is the filename?");
+                string filename = Console.ReadLine();
+
+                // display
+                journal.LoadFromFile(filename);
+            }
+            else if (user_input == "5")
+            {
+                // exit if statement
+                Console.WriteLine("Thanks for writing in your journal. Exiting program.");
+                return;
+            }
+            else
+            {
+                // restart do-while loop if an invalid value is entered
+                Console.WriteLine("Invalid value. Please try again.");
+            }
+        } while (user_input != "5"); // quit the program if user enters 5
     }
 }
