@@ -51,8 +51,39 @@ class Program
                 Console.Write("What is the filename?");
                 string filename = Console.ReadLine();
 
-                // save all Journal Entries to requested file
-                journal.SaveToFile(filename);
+                // check for existing password
+                Password password = new Password();
+                if (password.checkExist(filename))
+                {
+                    // ask for the password and verify it
+                    Console.Write($"What is the password for {filename}?");
+                    string enteredPassword = Console.ReadLine();
+
+                    if (password.verifyPassword(filename, enteredPassword))
+                    {
+                        // save all Journal Entries to requested file
+                        journal.SaveToFile(filename);
+                        
+                        // give success message
+                        Console.WriteLine("PASSWORD CORRECT. Entries saved.");
+                    }
+                    else
+                    {
+                        // give fail message
+                        Console.WriteLine("PASSWORD INCORRECT");
+                    }
+                }
+                else
+                {
+                    // ask for a password & create new password
+                    Console.Write($"Create a password for {filename}:");
+                    string enteredPassword = Console.ReadLine();
+
+                    password.setPassword(enteredPassword);
+                }
+
+
+                
             }
             else if (user_input == "4")
             {
@@ -60,8 +91,25 @@ class Program
                 Console.Write("What is the filename?");
                 string filename = Console.ReadLine();
 
-                // display
-                journal.LoadFromFile(filename);
+                // ask for password
+                Console.Write($"What is the password for {filename}?");
+                string enteredPassword = Console.ReadLine();
+
+                // verify password
+                Password password = new Password();
+                if (password.verifyPassword(filename, enteredPassword))
+                {
+                    // load entries
+                    journal.LoadFromFile(filename);
+                    
+                    // give success message
+                    Console.WriteLine("PASSWORD CORRECT. Entries loaded.");
+                }
+                else
+                {
+                    // give fail message
+                    Console.WriteLine("PASSWORD INCORRECT");
+                }
             }
             else if (user_input == "5")
             {
