@@ -25,10 +25,7 @@ public class Journal
         {
             foreach (Entry entry in _entries)
             {
-                outputFile.WriteLine($"{entry._date}");
-                outputFile.WriteLine($"{entry._promptText}");
-                outputFile.WriteLine($"{entry._entryText}");
-                outputFile.WriteLine("");
+                outputFile.WriteLine($"{entry._date}||{entry._promptText}||{entry._promptText}");
             }
         }
     }
@@ -38,13 +35,15 @@ public class Journal
 
         string[] lines = File.ReadAllLines(file);
 
-        for (int i = 0; i < lines.Length; i += 4)
+        foreach (string line in lines)
         {
+            string[] parts = line.Split("||");
+
             Entry entry = new Entry();
 
-            entry._date = lines[i];
-            entry._promptText = lines[i + 1];
-            entry._entryText = lines[i + 2];
+            entry._date = parts[0];
+            entry._promptText = parts[1];
+            entry._entryText = parts[2];
 
             _entries.Add(entry);
         }
