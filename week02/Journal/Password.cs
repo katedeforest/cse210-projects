@@ -4,50 +4,50 @@ using System.Collections.Generic;
 
 public class Password
 {
-    Dictionary<string, string> _journalPassword = new Dictionary<string, string>();
+    private Dictionary<string, string> _journalPassword = new Dictionary<string, string>();
+    private string _filename = "journalPassword.txt"; // store all passwords here
 
-    
-    public void setPassword(string journal, string password) // takes journal and password, no return
+    public Password()
     {
-        // add a journal:password to dictionary
-        _journalPassword.Add(journal, password);
-
-        string filename = "journalPassword.txt";
-
-        using (StreamWriter outputFile = new StreamWriter(filename))
+        // Load existing passwords from file if it exists
+        if (File.Exists(_filename))
         {
-            outputFile.WriteLine(_journalPassword);
+            string[] lines = File.ReadAllLines(_filename);
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split("||");
+                if (parts.Length == 2)
+                {
+                    _journalPassword[parts[0]] = parts[1];
+                }
+            }
+        }
+    }
+
+    public void setPassword(string journal, string password)
+    {
+        // Add or update the password for the journal
+        _journalPassword[journal] = password;
+
+        // Save all passwords to file
+        using (StreamWriter outputFile = new StreamWriter(_filename))
+        {
+            foreach (var kvp in _journalPassword)
+            {
+                outputFile.WriteLine($"{kvp.Key}||{kvp.Value}");
+            }
         }
 
         Console.WriteLine($"Password for {journal} saved.");
     }
-    
-    public bool checkExist(string journal)// takes journal, returns true or false
-    {
-        // load passwords
-        
 
-        // check for existing journal in dictionary
-        if (journalPassword.ContainsKey(journal))
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
-    }
-    
-    public bool verifyPassword(string journal, string password) // takes journal and password, returns true or false
+    public bool checkExist(string journal)
     {
-        // check for matching journal:password pair in dictionary
-        if (journalPassword.ContainsKey(journal) && journalPassword[journal] == password)
-        {
-            return true;
-        }
-        else 
-        {
-            return false;
-        }
+        return _journalPassword.ContainsKey(journal);
+    }
+
+    public bool verifyPassword(string journal, string password)
+    {
+        return _journalPassword.ContainsKey(journal) && _journalPassword[journal] == password;
     }
 }

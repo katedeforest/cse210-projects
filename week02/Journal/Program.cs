@@ -9,6 +9,7 @@ class Program
         Console.WriteLine("Welcome to the Journal Program!");
 
         Journal journal = new Journal();
+        Password passwordManager = new Password();
         string user_input;
 
         do
@@ -52,14 +53,13 @@ class Program
                 string filename = Console.ReadLine();
 
                 // check for existing password
-                Password password = new Password();
-                if (password.checkExist(filename))
+                if (passwordManager.checkExist(filename))
                 {
                     // ask for the password and verify it
                     Console.Write($"What is the password for {filename}?");
                     string enteredPassword = Console.ReadLine();
 
-                    if (password.verifyPassword(filename, enteredPassword))
+                    if (passwordManager.verifyPassword(filename, enteredPassword))
                     {
                         // save all Journal Entries to requested file
                         journal.SaveToFile(filename);
@@ -79,11 +79,10 @@ class Program
                     Console.Write($"Create a password for {filename}:");
                     string enteredPassword = Console.ReadLine();
 
-                    password.setPassword(enteredPassword);
+                    passwordManager.setPassword(filename, enteredPassword);
+                    journal.SaveToFile(filename);
+                    Console.WriteLine("Entries saved with new password.");
                 }
-
-
-                
             }
             else if (user_input == "4")
             {
@@ -96,8 +95,8 @@ class Program
                 string enteredPassword = Console.ReadLine();
 
                 // verify password
-                Password password = new Password();
-                if (password.verifyPassword(filename, enteredPassword))
+                
+                if (passwordManager.verifyPassword(filename, enteredPassword))
                 {
                     // load entries
                     journal.LoadFromFile(filename);

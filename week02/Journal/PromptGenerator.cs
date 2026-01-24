@@ -10,7 +10,7 @@ public class PromptGenerator
     public string GetRandomPrompt()
     {
         Random random = new Random();
-        int selector = random.Next(0, 10);
+        int selector = random.Next(_prompts.Count);
 
         string prompt = _prompts[selector];
 
