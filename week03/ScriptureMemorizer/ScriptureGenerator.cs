@@ -3,27 +3,30 @@ using System.IO;
 using System.Collections.Generic;
 
 public class ScriptureGenerator
-{
-    private string[] scripturesArray;
+{    private string[] _scripturesArray;
+ 
     public ScriptureGenerator()
     {
-        scripturesArray = File.ReadAllLines("oldtestament.cs");
+        _scripturesArray = File.ReadAllLines("oldtestament.txt");
     }
 
-    public Scripture getRandomScripture()
+    public Scripture GetRandomScripture()
     {
-        string[] scriptures = File.ReadAllLines("oldtestament.cs");
+        Random random = new Random();
+        int selector = random.Next(_scripturesArray.Length);
 
-        foreach (string item in scripturesArray)
-            {
-                string[] parts = item.Split("||");
+        string randomLine = _scripturesArray[selector];
+        string[] parts = randomLine.Split("||");
 
-                Reference reference = new Reference(parts[0], parts[1], parts[2], parts[3]);
+        string book = parts[0];
+        int chapter = int.Parse(parts[1]);
+        int verse = int.Parse(parts[2]);
+        int endVerse = int.Parse(parts[3]);
+        string text = parts[4];
 
-                _entries.Add(entry);
-            }
+        Reference reference = new Reference(book, chapter, verse, endVerse);
+        Scripture scripture = new Scripture(reference, text);
+
+        return scripture;
     }
-
-    
-
 }

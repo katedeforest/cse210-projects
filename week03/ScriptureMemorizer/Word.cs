@@ -25,14 +25,21 @@ public class Word
     }
     public string GetDisplayText()
     {
-        if (_isHidden)
-        {
-            string underscores = new string('_', _text.Length);
-            return underscores;
-        }
-        else
+        if (!_isHidden)
         {
             return _text;
         }
+
+        char[] chars = _text.ToCharArray();
+
+        for (int i = 0; i < chars.Length; i++)
+        {
+            if (char.IsLetter(chars[i]))
+            {
+                chars[i] = '_';
+            }
+        }
+
+        return new string(chars);
     }
 }
