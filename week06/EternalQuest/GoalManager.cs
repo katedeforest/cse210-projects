@@ -240,7 +240,7 @@ public class GoalManager
 
         if (goalAccomplished.IsComplete())
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("🌿🌿 You completed this goal! 🌿🌿");
             Console.ResetColor();
         }
@@ -249,8 +249,8 @@ public class GoalManager
 
         if (previousRank != newRank)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\nYou advanced to {newRank}!");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"You advanced to {newRank}!");
             Console.ResetColor();
         }
     }
