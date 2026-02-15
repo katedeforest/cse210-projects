@@ -4,17 +4,24 @@ public class SimpleGoal : Goal
 {
     private bool _isComplete = false;
 
-    public SimpleGoal(string name, string description, string points) : base(name, description, points)
+    public SimpleGoal(string name, string description, int points) : base(name, description, points)
     {}
-
-    public virtual void RecordEvent()
-    {}
-    public virtual bool IsComplete()
+    public SimpleGoal(string name, string description, int points, bool isComplete) : base(name, description, points)
     {
-        return false;
+        _isComplete = isComplete;
     }
-    public virtual string GetStringRepresentaion()
+
+    public override int RecordEvent()
     {
-        return "";
+        _isComplete = true;
+        return _points;
+    }
+    public override bool IsComplete()
+    {
+        return _isComplete;
+    }
+    public override string GetStringRepresentation()
+    {
+        return $"Simple Goal:{base.GetStringRepresentation()},{_isComplete}";
     }
 }

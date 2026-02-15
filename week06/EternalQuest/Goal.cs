@@ -2,29 +2,35 @@ using System;
 
 public class Goal
 {
-    private string _shortName;
-    private string _description;
-    private string _points;
+    protected string _shortName;
+    protected string _description;
+    protected int _points;
 
-    public Goal(string name, string description, string points)
+    public Goal(string name, string description, int points)
     {
         _shortName = name;
         _description = description;
         _points = points;
     }
 
-    public virtual void RecordEvent()
-    {}
+    public virtual int RecordEvent()
+    {
+        return 0;
+    }
     public virtual bool IsComplete()
     {
         return false;
     }
+    public virtual string GetShortName()
+    {
+        return _shortName;
+    }
     public virtual string GetDetailsString()
     {
-        return "";
+        return $"{_shortName} ({_description})";
     }
     public virtual string GetStringRepresentation()
     {
-        return "";
+        return $"{_shortName},{_description},{_points}";
     }
 }

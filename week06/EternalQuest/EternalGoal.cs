@@ -2,17 +2,19 @@ using System;
 
 public class EternalGoal : Goal
 {
-    public EternalGoal(string name, string description, string points) : base(name, description, points)
+    public EternalGoal(string name, string description, int points) : base(name, description, points)
     {}
 
-    public virtual void RecordEvent()
-    {}
-    public virtual bool IsComplete()
+    public override int RecordEvent()
+    {
+        return _points;
+    }
+    public override bool IsComplete()
     {
         return false;
     }
-    public virtual string GetStringRepresentaion()
+    public override string GetStringRepresentation()
     {
-        return "";
+        return $"Eternal Goal:{base.GetStringRepresentation()}";
     }
 }
