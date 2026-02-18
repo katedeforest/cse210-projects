@@ -159,6 +159,9 @@ public class GoalManager
         string fileName = Console.ReadLine();
         string firstLine;
 
+        _goals.Clear();
+        _score = 0;
+
         using (StreamReader reader = new StreamReader(fileName))
         {
             // Read the first line
@@ -193,11 +196,13 @@ public class GoalManager
                     int bonus = int.Parse(details[3]);
                     int target = int.Parse(details[4]);
                     int amountCompleted = int.Parse(details[5]);
-                    ChecklistGoal checklistGoal = new ChecklistGoal(shortName, description, points, bonus, target, amountCompleted);
+                    ChecklistGoal checklistGoal = new ChecklistGoal(shortName, description, points, target, bonus, amountCompleted);
                     _goals.Add(checklistGoal);
                 }
             }
         }
+        
+        Console.WriteLine("Goals loaded!");
     }
     public void RecordEvent()
     {

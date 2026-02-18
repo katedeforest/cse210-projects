@@ -11,10 +11,10 @@ public class ChecklistGoal : Goal
         _target = target;
         _bonus = bonus;
     }
-    public ChecklistGoal(string name, string description, int points, int bonus, int target, int amountCompleted) : base(name, description, points)
+    public ChecklistGoal(string name, string description, int points, int target, int bonus, int amountCompleted) : base(name, description, points)
     {
-        _bonus = bonus;
         _target = target;
+        _bonus = bonus;
         _amountCompleted = amountCompleted;
     }
 
@@ -48,6 +48,6 @@ public class ChecklistGoal : Goal
     }
     public override string GetStringRepresentation()
     {
-        return $"Checklist Goal:{base.GetStringRepresentation()},{_bonus},{_target},{_amountCompleted}";
+        return $"Checklist Goal«{base.GetStringRepresentation()}|{_bonus}|{_target}|{_amountCompleted}";
     }
 }
