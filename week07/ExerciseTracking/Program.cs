@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.Clear();
+        
         List<Activity> _activities = new List<Activity>();
 
         DateTime currentDate = DateTime.Now;
